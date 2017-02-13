@@ -44,12 +44,31 @@ $(document).ready(function() {
     error: onError
   });
 
+  $('form').on('submit', function(event){
+    event.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: "/api/albums",
+      data: $('form').serialize(),
+      success: onAlbumPost,
+      error: onError
+    });
+    $('form').each(function(){
+      this.reset();
+      });
+    });
+
+
 });
 
 function onSuccess(albums){
   albums.forEach(function(album){
     renderAlbum(album);
   });
+}
+
+function onAlbumPost(newAlbum){
+    renderAlbum(newAlbum);
 }
 
 function onError(err){

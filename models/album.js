@@ -9,4 +9,4 @@ var AlbumSchema = new Schema({
 });
 
 var Album = mongoose.model("Album", AlbumSchema);
-module.exports= Album;
+module.exports = Album;

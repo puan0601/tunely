@@ -1,10 +1,20 @@
-
+var db = require('../models');
 
 function index(req, res){
-  res.json(albums)
+  db.Album.find({}, function(err, albums){
+    res.json(albums);
+  });
 }
 
-function create(req, res){}
+function create(req, res){
+  var genres = req.body.genres.split(',').map(function(item){
+    return item.trim();
+  });
+    req.body.genres = genres;
+  db.Album.create(req.body, function(err,newAlbum){
+    res.json(newAlbum);
+  });
+}
 
 function show(req, res){}
 
@@ -18,52 +28,5 @@ module.exports = {
   show: show,
   destroy: destroy,
   update: update,
-  albums: albums
+//  albums: albums
 };
-
-var albums = [];
-
-albums.push({
-  _id: 132,
-  artistName: "Nine Inch Nails",
-  name: "The Downward Spiral",
-  releaseDate: "1994, March 8",
-  genres: [
-    "industrial",
-    "industrial metal"
-  ]
-});
-
-albums.push({
-  _id: 133,
-  artistName: "Metallica",
-  name: "Metallica",
-  releaseDate: "1991, August 12",
-  genres: [
-    "heavy metal"
-  ]
-});
-
-albums.push({
-  _id: 134,
-  artistName: "The Prodigy",
-  name: "Music for the Jilted Generation",
-  releaseDate: "1994, July 4",
-  genres: [
-    "electronica",
-    "breakbeat hardcore",
-    "rave",
-    "jungle"
-  ]
-});
-
-albums.push({
-  _id: 135,
-  artistName: "Johnny Cash",
-  name: "Unchained",
-  releaseDate: "1996, November 5",
-  genres: [
-    "country",
-    "rock"
-  ]
-});

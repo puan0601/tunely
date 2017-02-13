@@ -2,7 +2,9 @@ var express = require('express');
 var app= express();
 
 var db = require('./models');
-var controllers = require('./controllers')
+var controllers = require('./controllers');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended:true }));
 
 app.get('/api', controllers.api.index);
 
@@ -11,6 +13,8 @@ app.get('/', function (req,res){
 });
 
 app.get('/api/albums', controllers.albums.index);
+
+app.post('/api/albums', controllers.albums.create);
 
 app.use(express.static('public'));
 
